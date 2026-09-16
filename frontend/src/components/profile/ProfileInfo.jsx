@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const ProfileInfo = ({ privateArticles, publicArticles, totalArticles }) => {
+const ProfileInfo = ({ privateArticles, publicArticles, totalArticles ,rating}) => {
     const {user} = useSelector((state)=> state.user)
     const navigate = useNavigate();
   const information = [
@@ -13,15 +13,15 @@ const ProfileInfo = ({ privateArticles, publicArticles, totalArticles }) => {
     },
     {
       name: "Private",
-      count: privateArticles.length,
+      count: privateArticles?.length || 0,
     },
     {
       name: "Public",
-      count: publicArticles.length,
+      count: publicArticles?.length || 0,
     },
     {
       name: "Rating",
-      count: 4,
+      count: rating || 3.4,
     },
   ];
   return (

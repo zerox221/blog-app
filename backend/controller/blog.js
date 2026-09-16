@@ -169,6 +169,7 @@ exports.deleteBlogController = async (req, res) => {
   }
   try {
     const blog = await Blog.findByIdAndDelete(blogId);
+    
     if (!blog) {
       return res.status(400).json({
         success: false,
@@ -185,6 +186,7 @@ exports.deleteBlogController = async (req, res) => {
     await User.findByIdAndUpdate(userId, {
       $pull: { blogs: blogId },
     });
+    
   } catch (error) {
     console.log("errro while deleting the blog : ", error.message);
     res.status(500).json({
@@ -449,3 +451,4 @@ exports.popularBlogsController = async (req, res) => {
     });
   }
 };
+

@@ -27,7 +27,7 @@ userRouter.get("/blog/information/:id", authMiddleware, blogInfoController);
 userRouter.put("/like/blog/:id", authMiddleware, likeBlogController);
 userRouter.post("/comment/blog/:id", authMiddleware, commentBlogController);
 userRouter.get("/get/comments/:id", authMiddleware, getAllCommentsController);
-userRouter.get("/user/profil/info", authMiddleware, userBlogsController);
+userRouter.get("/profile/information", authMiddleware, userBlogsController);
 userRouter.put("/view/blog/:id",authMiddleware,blogsViewsController);
 userRouter.get("/popular/blogs",authMiddleware,popularBlogsController);
 module.exports = userRouter;
