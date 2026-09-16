@@ -22,9 +22,10 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import api from "@/services/api";
-import { toast } from "react-toastify";
+
 import { fetchProfileDetails } from "@/api/blogs";
 import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 const UserArticles = ({ article }) => {
   const dispatch = useDispatch();
@@ -42,8 +43,8 @@ const UserArticles = ({ article }) => {
       const response = await api.put(`/api/v1/user/delete/blog/${article._id}`);
       
       if (response.data.success) {
-        toast.success(response.data.message);
         fetchProfileDetails(dispatch);
+        toast.success(response.data.message);
       }
     } catch (error) {
       toast.error(error.response.data.message);

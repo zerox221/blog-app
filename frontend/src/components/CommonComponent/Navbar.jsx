@@ -2,6 +2,7 @@ import {
   CircleUserRound,
   Home,
   Menu,
+  PenLine,
   Settings,
   Shapes,
   SquareText,
@@ -38,10 +39,19 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="h-15 relative w-full justify-between flex items-center md:px-4 px-2 border-b border-[#DEDBD3]">
-      <div>
-        <h2 className="text-xl">Consise</h2>
-      </div>
+    <div className="h-15 relative w-full justify-between flex items-center md:px-4 px-3 border-b border-[#DEDBD3]">
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex items-center gap-1"
+      >
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-black">
+          <PenLine size={15} className="text-white" />
+        </div>
+
+        <span className="text-lg font-semibold tracking-tight">Consise</span>
+      </motion.div>
       <div className="hidden md:flex  md:gap-5">
         <NavLink
           to="/dashboard"

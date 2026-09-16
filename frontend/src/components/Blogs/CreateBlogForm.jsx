@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import TipTapEditor from "./TipTapEditor";
 import { useForm, Controller } from "react-hook-form";
 import api from "@/services/api";
-import { toast } from "react-toastify";
+
 import { useNavigate } from "react-router-dom";
 import { fetchProfileDetails } from "@/api/blogs";
 import { useDispatch } from "react-redux";
+import { toast } from "sonner";
 
 const CreateBlogForm = ({mode}) => {
   const dispatch = useDispatch();

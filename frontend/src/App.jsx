@@ -14,14 +14,20 @@ import Profile from "./Pages/Dashboard/Profile";
 import CreateArticle from "./Pages/Dashboard/CreateArticle";
 import ExploreArticles from "./Pages/blogPages/ExploreArticles";
 import ArticleInfo from "./Pages/blogPages/ArticleInfo";
-import { ToastContainer } from "react-toastify";
+
+import { Toaster, toast } from "sonner";
 import EditArticlePage from "./Pages/blogPages/EditArticlePage";
 
 const App = () => {
-  const {user , loading, error} = useSelector((state) => state.user);
+  const { user, loading, error } = useSelector((state) => state.user);
   return (
     <div className="font-sans overflow-x-hidden selection:bg-black selection:text-white">
-      <ToastContainer/>
+      <Toaster
+        duration={2000}
+        className="w-50"
+        position="bottom-center"
+
+      />
       {loading ? (
         "loading..."
       ) : (
@@ -48,11 +54,11 @@ const App = () => {
             }
           >
             <Route index element={<Dashboard />} />
-            <Route path="profile" element={<Profile/>}/>
-            <Route path="create/article" element={<CreateArticle/>}/>
-            <Route path="explore/article" element={<ExploreArticles/>}/>
-            <Route path="article/info/:id" element={<ArticleInfo/>}/>
-            <Route path="edit/article" element={<EditArticlePage/>}/>
+            <Route path="profile" element={<Profile />} />
+            <Route path="create/article" element={<CreateArticle />} />
+            <Route path="explore/article" element={<ExploreArticles />} />
+            <Route path="article/info/:id" element={<ArticleInfo />} />
+            <Route path="edit/article" element={<EditArticlePage />} />
           </Route>
           <Route path="*" element={<div>404 page not found</div>} />
         </Routes>
