@@ -23,8 +23,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import api from "@/services/api";
 import { toast } from "react-toastify";
+import { fetchProfileDetails } from "@/api/blogs";
+import { useDispatch } from "react-redux";
 
 const UserArticles = ({ article }) => {
+  const dispatch = useDispatch();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -37,9 +40,10 @@ const UserArticles = ({ article }) => {
     console.log("Deleting article:", article._id);
     try {
       const response = await api.put(`/api/v1/user/delete/blog/${article._id}`);
+      
       if (response.data.success) {
         toast.success(response.data.message);
-        
+        fetchProfileDetails(dispatch);
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -48,7 +52,6 @@ const UserArticles = ({ article }) => {
     }
     setDeleteOpen(false);
   };
-
 
   return (
     <>

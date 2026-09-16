@@ -5,8 +5,11 @@ import { useForm, Controller } from "react-hook-form";
 import api from "@/services/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { fetchProfileDetails } from "@/api/blogs";
+import { useDispatch } from "react-redux";
 
 const CreateBlogForm = ({mode}) => {
+  const dispatch = useDispatch();
 
   console.log("mode = ", mode);
 
@@ -58,6 +61,7 @@ const CreateBlogForm = ({mode}) => {
       console.log(response);
       
       toast.success("article published successfully");
+      fetchProfileDetails(dispatch);
       navigate("/dashboard");
      
     } catch (error) {
