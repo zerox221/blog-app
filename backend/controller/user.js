@@ -2,7 +2,7 @@ const User = require("../models/user.model");
 
 exports.getMeController = async (req, res) => {
   try {
-      console.log(req.user);
+    console.log(req.user);
     const { id } = req.user;
     if (!id) {
       return res.status(400).json({
@@ -17,6 +17,7 @@ exports.getMeController = async (req, res) => {
       message: "user fetched successfully",
       user,
     });
+    
   } catch (error) {
     console.log("error in getme controller : ",error.message);
     res.status(500).json({

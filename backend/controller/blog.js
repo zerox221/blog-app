@@ -119,7 +119,7 @@ exports.getAllblogs = async (req, res) => {
   if (sort === "recent") {
     sortOption = { createdAt: -1 };
   } else if (sort === "popular") {
-    sortOption = { popularScore: -1 };
+    sortOption = { views : 1 };
   } else {
     return res.status(400).json({
       message: "Invalid sort option",
@@ -136,8 +136,8 @@ exports.getAllblogs = async (req, res) => {
       .sort(sortOption)
       .populate("admin")
       .skip(skip)
-      .limit(10)
-      .select("-content");
+      .select("-content")
+      .limit(10);
 
     let remainingBlogs = blog - (skip + limit);
     if (remainingBlogs < 0) {

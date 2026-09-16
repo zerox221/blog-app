@@ -9,13 +9,13 @@ exports.authMiddleware = async (req, res, next) => {
       return res.status(401).json({
         success: false,
         message: "access token required",
+        accessToken: accessToken,
       });
     }
     const decode =  jwt.verify(
       accessToken,
       process.env.ACCESS_TOKEN_SECRET,
     );
-    console.log("decode object " ,decode)
     req.user = decode;
     next();
   } catch (error) {

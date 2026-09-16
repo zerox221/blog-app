@@ -40,20 +40,19 @@ exports.registerController = async (req, res) => {
         password: hashPassword,
         otp,
         expiresIn: Date.now() + 2 * 60 * 1000,
-        profile : {
-          url : `https://api.dicebear.com/10.x/initials/svg?initialsVariant=alt&lettersVariant=single:1&backgroundColor=000000&seed=${name}`,
-        }
+        profile: {
+          url: `https://api.dicebear.com/10.x/initials/svg?initialsVariant=alt&lettersVariant=single:1&backgroundColor=000000&seed=${name}`,
+        },
       },
       { upsert: true },
     );
 
-    sendOtp({email,otp,name});
+    sendOtp({ email, otp, name });
 
     res.status(200).json({
       success: true,
       email: email,
     });
-
   } catch (error) {
     console.log("error in registration handler : ", error.message);
     res.status(500).json({
@@ -97,10 +96,10 @@ exports.verifyController = async (req, res) => {
         password: user.password,
         blogs: user.blogs,
         additionalInfo: user.additionalInfo,
-        profile : user.profile,
+        profile: user.profile,
       });
 
-      await TempUser.findByIdAndDelete(user._id)
+      await TempUser.findByIdAndDelete(user._id);
 
       const sessionEntry = await session.create({
         email: saveUser.email,
@@ -140,13 +139,15 @@ exports.verifyController = async (req, res) => {
         maxAge: 15 * 60 * 1000,
       });
 
+    
+
       res.status(200).json({
         success: true,
         message: "login successfully",
         user: {
           name: saveUser.name,
           email: saveUser.email,
-          profile : saveUser.profile,
+          profile: saveUser.profile,
         },
       });
     } else {
@@ -175,10 +176,7 @@ exports.refreshAccessToken = async (req, res) => {
       });
     }
 
-    const decoded = await jwt.verify(
-      refreshToken,
-      process.env.REFRESH_TOKEN_SECRET,
-    );
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
 
     const sessionCheck = await session.findById(decoded.sessionId);
 
@@ -188,11 +186,10 @@ exports.refreshAccessToken = async (req, res) => {
       });
     }
 
-
     const payload = {
       id: decoded.id,
       email: decoded.email,
-       sessionId: decoded.sessionId,
+      sessionId: decoded.sessionId,
     };
 
     const newRefreshToken = jwt.sign(
@@ -200,12 +197,24 @@ exports.refreshAccessToken = async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "7d" },
     );
+
     const newAccessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "15min",
     });
 
-    res.cookie("refreshToken", newRefreshToken);
-    res.cookie("accessToken", newAccessToken);
+
+    res.cookie("refreshToken", newRefreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    res.cookie("accessToken", newAccessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 15 * 60 * 1000,
+    });
 
     return res.status(200).json({
       success: true,
@@ -277,6 +286,7 @@ exports.loginController = async (req, res) => {
       secure: true,
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
+      
     });
     res.cookie("accessToken", newaccessToken, {
       httpOnly: true,

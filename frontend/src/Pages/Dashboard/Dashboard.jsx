@@ -31,8 +31,8 @@ const Dashboard = () => {
     <div className="min-h-screen w-full relative  flex flex-col gap-8 px-3 py-8 md:px-15 md:gap-20 md:py-10">
       <motion.div
         animate={{
-          x: 15,
-          y: 5,
+          x: 25,
+          y: 10,
         }}
         transition={{
           ease: "linear",
